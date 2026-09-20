@@ -1,52 +1,47 @@
 # Research Paper Q&A (RAG)
 
-A Retrieval-Augmented Generation app that answers questions about an uploaded
-research paper, grounded in the paper's actual text with page citations.
+A Retrieval-Augmented Generation notebook that answers questions about an
+uploaded research paper, grounded in the paper's actual text with page
+citations.
 
 Repo: https://github.com/pradeep-999ai/research-paper-qa
 
-## Setup
+## How it works
 
-```bash
-git clone https://github.com/pradeep-999ai/research-paper-qa.git
-cd research-paper-qa
-python -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+1. Upload a research paper (PDF)
+2. The paper is split into overlapping text chunks and embedded
+3. When you ask a question, the most relevant chunks are retrieved
+4. An LLM generates an answer using **only** those retrieved chunks — with
+   the source page numbers cited, and an explicit "not covered" response if
+   the answer isn't in the paper
 
-Set your Google Gemini API key (free, no billing required — get one at
-[aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)):
+## Run it (Google Colab)
 
-```bash
-export GOOGLE_API_KEY="AI..."      # Windows: $env:GOOGLE_API_KEY="AI..."
-```
-
-## Run
-
-```bash
-streamlit run app.py
-```
-
-Open the URL Streamlit prints (usually `http://localhost:8501`), upload a PDF,
-and ask questions.
+1. Open **`Research_Paper_QA_Colab.ipynb`** in this repo, then click
+   **"Open in Colab"** (or go to
+   [colab.research.google.com](https://colab.research.google.com) → File →
+   Open notebook → GitHub tab → paste this repo's URL)
+2. Run each cell in order (Shift+Enter)
+3. When prompted, paste a free Gemini API key — get one at
+   [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
+   (no credit card required)
+4. Upload a research paper PDF when prompted
+5. Ask questions in the last cell — re-run it as many times as you like
 
 ## Notes
 
-- Google's Gemini model names change fairly often. If you hit a "model not
-  found" error, the error message itself names the current replacement —
-  update the `model=` value in `qa_chain.py` / `index_store.py` accordingly.
-- The free tier is rate-limited (~100 embedding requests/minute). Larger
-  papers may need a short wait/retry if you hit that limit.
+- Google renames/retires Gemini model IDs fairly often. If a cell errors
+  with a 404 "model not found", the error message itself names the current
+  replacement — update the `model=` value in the relevant cell and re-run.
+- The free tier has daily/per-minute rate limits. If you hit a 429 error,
+  wait a bit and retry, or switch to a lighter model variant (e.g. a
+  "flash-lite" model) if one is available.
 
-## Project structure
+## Tech stack
 
-```
-research-paper-qa/
-├── app.py            # Streamlit UI
-├── ingest.py         # PDF loading + chunking
-├── index_store.py    # embeddings + FAISS index (Gemini)
-├── qa_chain.py        # retrieval + grounded generation (Gemini)
-├── requirements.txt
-└── sample_papers/    # sample PDFs for demo
-```
+- **PDF text extraction:** PyMuPDF
+- **Chunking:** LangChain `RecursiveCharacterTextSplitter`
+- **Embeddings:** Google Gemini (`gemini-embedding-001`)
+- **Vector store:** FAISS
+- **Generation:** Google Gemini API
+- **Interface:** Google Colab notebook
