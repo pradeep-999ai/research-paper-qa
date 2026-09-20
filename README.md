@@ -1,5 +1,7 @@
 # Research Paper Q&A (RAG)
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/pradeep-999ai/research-paper-qa/blob/main/Research_Paper_QA_Colab.ipynb)
+
 A Retrieval-Augmented Generation notebook that answers questions about an
 uploaded research paper, grounded in the paper's actual text with page
 citations.
@@ -17,10 +19,9 @@ Repo: https://github.com/pradeep-999ai/research-paper-qa
 
 ## Run it (Google Colab)
 
-1. Open **`Research_Paper_QA_Colab.ipynb`** in this repo, then click
-   **"Open in Colab"** (or go to
-   [colab.research.google.com](https://colab.research.google.com) → File →
-   Open notebook → GitHub tab → paste this repo's URL)
+Click the **"Open in Colab"** badge above, or:
+1. Go to [colab.research.google.com](https://colab.research.google.com) → File →
+   Open notebook → GitHub tab → paste this repo's URL
 2. Run each cell in order (Shift+Enter)
 3. When prompted, paste a free Gemini API key — get one at
    [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
